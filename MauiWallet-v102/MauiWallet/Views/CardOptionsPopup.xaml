@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<controls:BasePopupPage
+    x:Class="MauiWallet.Views.CardOptionsPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title=""
+    ForegroundColor="Transparent"
+    HorizontalOptions="{OnIdiom Phone='Fill',
+                                Tablet='Fill',
+                                Desktop='Fill'}"
+    VerticalOptions="{OnIdiom Phone='End',
+                              Tablet='End',
+                              Desktop='End'}">
+    <Border Margin="5" BackgroundColor="{DynamicResource BasePageColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="26,26,26,26" />
+        </Border.StrokeShape>
+
+        <StackLayout
+            Padding="20,25"
+            Spacing="16"
+            VerticalOptions="Center">
+            <Label
+                FontAttributes="Bold"
+                FontSize="19"
+                HorizontalOptions="Center"
+                Style="{StaticResource Title2}"
+                Text="Card Options" />
+
+            <Rectangle Fill="{DynamicResource BaseSeparatorColor}" HeightRequest="1" />
+
+            <!--  Change Limit  -->
+            <Grid
+                Padding="0,5"
+                ColumnDefinitions="Auto, *, 30"
+                ColumnSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnChangeLimit_Tapped" />
+                </Grid.GestureRecognizers>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MauiKitIcons"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static views:MauiKitIcons.Adjust}"
+                    TextColor="{DynamicResource BaseIconColor}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    FontFamily="MediumFont"
+                    HorizontalOptions="Start"
+                    Text="Change Limit"
+                    VerticalOptions="Center" />
+
+                <!--  CHEVRON  -->
+                <Label
+                    Grid.Column="2"
+                    FontFamily="MauiKitIcons"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="{x:Static views:MauiKitIcons.ChevronRight}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+            <!--  Top up  -->
+            <Grid
+                Padding="0,5"
+                ColumnDefinitions="Auto, *, 30"
+                ColumnSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTopup_Tapped" />
+                </Grid.GestureRecognizers>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MauiKitIcons"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static views:MauiKitIcons.InboxArrowDown}"
+                    TextColor="{DynamicResource BaseIconColor}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    FontFamily="MediumFont"
+                    HorizontalOptions="Start"
+                    Text="Top up"
+                    VerticalOptions="Center" />
+
+                <!--  CHEVRON  -->
+                <Label
+                    Grid.Column="2"
+                    FontFamily="MauiKitIcons"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="{x:Static views:MauiKitIcons.ChevronRight}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+            <!--  Refund  -->
+            <Grid
+                Padding="0,5"
+                ColumnDefinitions="Auto, *, 30"
+                ColumnSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRefund_Tapped" />
+                </Grid.GestureRecognizers>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MauiKitIcons"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static views:MauiKitIcons.InboxArrowUp}"
+                    TextColor="{DynamicResource BaseIconColor}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    FontFamily="MediumFont"
+                    HorizontalOptions="Start"
+                    Text="Refund"
+                    VerticalOptions="Center" />
+
+                <!--  CHEVRON  -->
+                <Label
+                    Grid.Column="2"
+                    FontFamily="MauiKitIcons"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="{x:Static views:MauiKitIcons.ChevronRight}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+            <!--  Temporary Block  -->
+            <Grid
+                Padding="0,5"
+                ColumnDefinitions="Auto, *, 30"
+                ColumnSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTemporaryBlock_Tapped" />
+                </Grid.GestureRecognizers>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MauiKitIcons"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static views:MauiKitIcons.Clock}"
+                    TextColor="{DynamicResource BaseIconColor}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    FontFamily="MediumFont"
+                    HorizontalOptions="Start"
+                    Text="Temporary Block"
+                    VerticalOptions="Center" />
+
+                <!--  CHEVRON  -->
+                <Label
+                    Grid.Column="2"
+                    FontFamily="MauiKitIcons"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="{x:Static views:MauiKitIcons.ChevronRight}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+
+            <!--  Permanent Block  -->
+            <Grid
+                Padding="0,5"
+                ColumnDefinitions="Auto, *, 30"
+                ColumnSpacing="10">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPermanentBlock_Tapped" />
+                </Grid.GestureRecognizers>
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MauiKitIcons"
+                    FontSize="22"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="{x:Static views:MauiKitIcons.CloseBoxOutline}"
+                    TextColor="{DynamicResource BaseIconColor}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Column="1"
+                    FontFamily="MediumFont"
+                    HorizontalOptions="Start"
+                    Text="Permanent Block"
+                    VerticalOptions="Center" />
+
+                <!--  CHEVRON  -->
+                <Label
+                    Grid.Column="2"
+                    FontFamily="MauiKitIcons"
+                    FontSize="20"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Text="{x:Static views:MauiKitIcons.ChevronRight}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </Grid>
+        </StackLayout>
+    </Border>
+</controls:BasePopupPage>

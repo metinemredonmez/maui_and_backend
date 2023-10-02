@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.RequestPaymentDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleRequestPayment}">
+
+    <Grid
+        Padding="20"
+        BackgroundColor="{DynamicResource BasePageColor}"
+        RowDefinitions="*, 60">
+
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="10" VerticalOptions="StartAndExpand">
+                <controls:RoundedCornerImage
+                    HeightRequest="100"
+                    Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-2.jpg"
+                    StrokeShape="{RoundRectangle CornerRadius='50'}"
+                    WidthRequest="100" />
+
+                <Label
+                    FontFamily="BoldFont"
+                    FontSize="19"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Alieen Fullbright"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="10">
+                    <Label HorizontalOptions="Center" Text="Bank" />
+                    <Rectangle
+                        Fill="{DynamicResource BaseSeparatorColor}"
+                        HeightRequest="20"
+                        VerticalOptions="Center"
+                        WidthRequest="1" />
+                    <Label HorizontalOptions="Center" Text="346054765" />
+                </HorizontalStackLayout>
+
+                <Rectangle Fill="{DynamicResource BaseSeparatorColor}" HeightRequest="1" />
+
+                <Border
+                    Padding="20,10"
+                    BackgroundColor="{DynamicResource BasePageColor}"
+                    HeightRequest="80"
+                    HorizontalOptions="Fill"
+                    Stroke="{DynamicResource PrimaryColor}"
+                    StrokeShape="{RoundRectangle CornerRadius='16'}"
+                    StrokeThickness="1.5">
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        ColumnSpacing="12"
+                        HorizontalOptions="Fill">
+
+                        <HorizontalStackLayout Spacing="10">
+                            <Label
+                                FontFamily="FaPro"
+                                FontSize="20"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Opacity="1"
+                                Text="{x:Static views:FaPro.MoneyBill}"
+                                TextColor="{DynamicResource PrimaryColor}"
+                                VerticalOptions="CenterAndExpand" />
+                            <Label
+                                FontFamily="MediumFont"
+                                Text="{localization:Translate StringAmount}"
+                                TextColor="{DynamicResource BaseLightTextColor}"
+                                VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+
+                        <handlers:BorderlessEntry
+                            Grid.Column="1"
+                            FontFamily="BoldFont"
+                            FontSize="25"
+                            HorizontalOptions="EndAndExpand"
+                            HorizontalTextAlignment="End"
+                            Placeholder=""
+                            Text="$129.50"
+                            TextColor="{DynamicResource BaseTextColor}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Label
+                    FontAttributes="Bold"
+                    Text="{localization:Translate StringSelectCategory}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <Border Padding="0,5" BackgroundColor="{DynamicResource BasePageColor}">
+                    <Picker Title="Category">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Salary</x:String>
+                                <x:String>Freelance work</x:String>
+                                <x:String>Others</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Border>
+
+
+                <Label
+                    FontAttributes="Bold"
+                    Text="{localization:Translate StringNote}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <Border
+                    Padding="15,5"
+                    BackgroundColor="{DynamicResource BasePageColor}"
+                    Stroke="{DynamicResource DefaultBorder}"
+                    StrokeThickness="1">
+                    <handlers:BorderlessEntry
+                        HeightRequest="36"
+                        HorizontalOptions="StartAndExpand"
+                        Keyboard="Numeric"
+                        Placeholder="Hi John, I'd like to collect my salary"
+                        PlaceholderColor="{DynamicResource BaseLightTextColor}" />
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <Button
+            Grid.Row="1"
+            Command="{Binding SendRequestCommand}"
+            HeightRequest="50"
+            Style="{StaticResource ButtonPrimaryStyle}"
+            Text="{localization:Translate ButtonSend}"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

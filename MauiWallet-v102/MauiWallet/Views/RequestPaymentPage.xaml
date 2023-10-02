@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.RequestPaymentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleRequestPayment}">
+
+    <ContentPage.Resources />
+    <ScrollView>
+        <StackLayout
+            Padding="20"
+            BackgroundColor="{DynamicResource BasePageColor}"
+            Spacing="20">
+
+            <VerticalStackLayout Spacing="15">
+                <!--  Searchbar  -->
+                <Border
+                    Padding="0"
+                    BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                    StrokeThickness="1.5">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12" />
+                    </Border.StrokeShape>
+                    <Grid>
+                        <SearchBar
+                            android:Entry.ImeOptions="Search"
+                            ios:SearchBar.SearchBarStyle="Minimal"
+                            CancelButtonColor="{DynamicResource BaseIconColor}"
+                            FontFamily="RegularFont"
+                            HeightRequest="46"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="{localization:Translate StringSearchContact}"
+                            PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                            TextColor="{DynamicResource BaseTextColor}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!--  Contact Lists  -->
+            <CollectionView
+                ItemsSource="{Binding ContactLists}"
+                SelectionChangedCommand="{Binding RequestPaymentDetailCommand}"
+                SelectionChangedCommandParameter="{Binding .}"
+                SelectionMode="Single"
+                VerticalScrollBarVisibility="Never">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="12" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:ContactItemTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.MyCardsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleMyCard}"
+    BackgroundColor="{DynamicResource BasePageColor}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="templates:MyCardItemTemplate">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout
+        Padding="20"
+        BackgroundColor="{DynamicResource BasePageColor}"
+        Spacing="15">
+
+        <Button
+            Padding="12,0"
+            FontSize="12"
+            HeightRequest="36"
+            HorizontalOptions="End"
+            Style="{StaticResource ButtonPrimaryStyle}"
+            Text="{localization:Translate ButtonAddCard}"
+            VerticalOptions="End" />
+
+        <CollectionView
+            ItemsSource="{Binding MyCardLists}"
+            SelectionChangedCommand="{Binding CardOptionsCommand}"
+            SelectionChangedCommandParameter="{Binding .}"
+            SelectionMode="Single">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="12"
+                    Orientation="Vertical"
+                    Span="{OnIdiom Phone='1',
+                                   Tablet='2',
+                                   Desktop='3'}"
+                    VerticalItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <templates:MyCardItemTemplate />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </StackLayout>
+</ContentPage>

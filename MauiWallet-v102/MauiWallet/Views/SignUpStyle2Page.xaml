@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.SignUpStyle2Page"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="SignUpPage"
+    NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <VerticalStackLayout
+            Padding="30"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="20"
+            VerticalOptions="Start">
+            <Border
+                Padding="0"
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                HeightRequest="80"
+                HorizontalOptions="Center"
+                Stroke="{DynamicResource White}"
+                StrokeShape="{RoundRectangle CornerRadius=16}"
+                StrokeThickness="3"
+                WidthRequest="80">
+                <controls:RoundedCornerImage
+                    BackgroundColor="{DynamicResource White}"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Source="logo.png"
+                    Stroke="Transparent"
+                    StrokeShape="{RoundRectangle CornerRadius=50}"
+                    VerticalOptions="Center"
+                    WidthRequest="50" />
+            </Border>
+            <Label
+                FontAttributes="Bold"
+                FontSize="19"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource Title2}"
+                Text="{localization:Translate StringRegisterNow}" />
+            <Label
+                FontSize="17"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Style="{StaticResource PrimaryLabel}"
+                Text="{localization:Translate StringRegisterNowSubtitle}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="30"
+            HorizontalOptions="Fill"
+            Spacing="16"
+            VerticalOptions="CenterAndExpand">
+            <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                <handlers:BorderlessEntry
+                    HeightRequest="42"
+                    Keyboard="Email"
+                    Placeholder="{localization:Translate StringEmail}"
+                    PlaceholderColor="{DynamicResource BaseTextColor}" />
+            </Border>
+
+            <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                <handlers:BorderlessEntry
+                    HeightRequest="42"
+                    Keyboard="Default"
+                    Placeholder="{localization:Translate StringUsername}"
+                    PlaceholderColor="{DynamicResource BaseTextColor}" />
+            </Border>
+
+            <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                <handlers:BorderlessEntry
+                    HeightRequest="42"
+                    IsPassword="False"
+                    Keyboard="Default"
+                    Placeholder="{localization:Translate StringPassword}"
+                    PlaceholderColor="{DynamicResource BaseTextColor}" />
+            </Border>
+
+            <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                <handlers:BorderlessEntry
+                    HeightRequest="42"
+                    IsPassword="False"
+                    Keyboard="Default"
+                    Placeholder="{localization:Translate StringConfirmPassword}"
+                    PlaceholderColor="{DynamicResource BaseTextColor}" />
+            </Border>
+
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Row="2"
+            Padding="30"
+            HorizontalOptions="Fill"
+            Spacing="20"
+            VerticalOptions="EndAndExpand">
+            <Button
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                CornerRadius="14"
+                HeightRequest="50"
+                Text="{localization:Translate ButtonSignup}"
+                TextColor="{DynamicResource White}" />
+            <Button
+                BackgroundColor="Transparent"
+                Clicked="SignInButton_Clicked"
+                CornerRadius="12"
+                FontSize="15"
+                Text="{localization:Translate ButtonAlreadyRegistered}"
+                TextColor="{DynamicResource BaseTextColor}" />
+        </VerticalStackLayout>
+
+        <!--  Back Button  -->
+        <Border
+            Margin="20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            HeightRequest="40"
+            HorizontalOptions="End"
+            StrokeThickness="0"
+            VerticalOptions="Start"
+            WidthRequest="40">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GoBack_Tapped" />
+            </Border.GestureRecognizers>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Image
+                HeightRequest="30"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="IonIcons"
+                        Glyph="{x:Static views:IonIcons.AndroidClose}"
+                        Size="25"
+                        Color="{DynamicResource BaseTextColor}" />
+                </Image.Source>
+            </Image>
+        </Border>
+    </Grid>
+</ContentPage>

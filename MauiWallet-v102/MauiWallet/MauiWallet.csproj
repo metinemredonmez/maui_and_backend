@@ -1,0 +1,657 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net7.0-ios;net7.0-maccatalyst;net7.0-android</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.22621.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
+		<OutputType>Exe</OutputType>
+		<RootNamespace>MauiWallet</RootNamespace>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Display name -->
+		<ApplicationTitle>M-Wallet</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.tls.mauiwallet</ApplicationId>
+		<ApplicationIdGuid>c2592377-e23d-4e85-8fe8-e1843b73787a</ApplicationIdGuid>
+
+		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+		<ApplicationVersion>1</ApplicationVersion>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateKeyFile>MauiWallet_TemporaryKey.pfx</PackageCertificateKeyFile>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
+		<ApplicationId>com.tls.mauiwallet</ApplicationId>
+		<ApplicationTitle>M-Wallet</ApplicationTitle>
+		<CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#EAEEF6" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\Images\logo.png" Color="#FFFFFF" BaseSize="400,400" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+		<MauiImage Update="Resources\Splash\splash.svg" Color="#FFFFFF" BaseSize="400,400" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<!-- Android -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-android33.0')) != true">
+		<Compile Remove="**\*.Android.cs" />
+		<None Include="**\*.Android.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+		<Compile Remove="Handlers\VideoHandler.cs" />
+		<Compile Remove="Handlers\VideoHandler.MaciOS.cs" />
+	</ItemGroup>
+
+	<!-- iOS and Mac Catalyst -->
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net7.0-ios')) != true AND $(TargetFramework.StartsWith('net7.0-maccatalyst')) != true">
+		<Compile Remove="**\*.MaciOS.cs" />
+		<None Include="**\*.MaciOS.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<!-- Windows -->
+	<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
+		<Compile Remove="**\*.Windows.cs" />
+		<None Include="**\*.Windows.cs" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AndroidResource Remove="Data\**" />
+		<Compile Remove="Data\**" />
+		<EmbeddedResource Remove="Data\**" />
+		<MauiCss Remove="Data\**" />
+		<MauiXaml Remove="Data\**" />
+		<None Remove="Data\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Extensions\LocalizeExtension.cs" />
+		<Compile Remove="Resources\FaBrands.cs" />
+		<Compile Remove="Resources\FaRegular.cs" />
+		<Compile Remove="Resources\IonIcons.cs" />
+		<Compile Remove="Resources\LineAwesome.cs" />
+		<Compile Remove="Resources\MaterialDesignIcons.cs" />
+		<Compile Remove="Resources\Raw\IconFont.cs" />
+		<Compile Remove="Resources\Translations\TranslationManager.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\Fonts\fa_solid.ttf" />
+		<None Remove="Resources\Fonts\icon.ttf" />
+		<None Remove="Resources\Fonts\material-icons-outlined-regular.otf" />
+		<None Remove="Resources\Images\dummy.png" />
+		<None Remove="Resources\Images\error.png" />
+		<None Remove="Resources\Images\icnmenuclose.png" />
+		<None Remove="Resources\Images\icnmenuclosedark.png" />
+		<None Remove="Resources\Images\maps.jpg" />
+		<None Remove="Resources\Images\nointernet.png" />
+		<None Remove="Resources\Images\photo.jpg" />
+		<None Remove="Resources\Images\xamarinstore.jpg" />
+		<None Remove="Resources\Raw\AndroidVideo.mp4" />
+		<None Remove="Resources\Raw\AppleVideo.mp4" />
+		<None Remove="Resources\Raw\initialanimation.json" />
+		<None Remove="Resources\Raw\payment.json" />
+		<None Remove="Resources\Raw\WindowsVideo.mp4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\Fonts\Font-Awesome-Solid.otf" />
+		<None Remove="Resources\Images\arrow_left.svg" />
+		<None Remove="Resources\Images\avatar_empty.png" />
+		<None Remove="Resources\Images\avatar_filled.png" />
+		<None Remove="Resources\Images\bird_empty.png" />
+		<None Remove="Resources\Images\bird_filled.png" />
+		<None Remove="Resources\Images\case_empty.png" />
+		<None Remove="Resources\Images\case_filled.png" />
+		<None Remove="Resources\Images\flame_empty.png" />
+		<None Remove="Resources\Images\flame_filled.png" />
+		<None Remove="Resources\Images\pizza_empty.png" />
+		<None Remove="Resources\Images\pizza_filled.png" />
+		<None Remove="Resources\Images\sandy_beach.jpg" />
+		<None Remove="Resources\Images\settings.png" />
+		<None Remove="Resources\Images\speaker.png" />
+		<None Remove="Resources\Images\star.png" />
+	</ItemGroup>
+
+	<!--<ItemGroup Condition="'$(Configuration)'!='DEBUG'">
+		<PackageReference Include="SimpleToolkit.SimpleShell.Controls" Version="2.0.0-preview1" />
+		<PackageReference Include="SimpleToolkit.SimpleShell" Version="2.0.*" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<MauiAsset Include="Views\FontIcons\MaterialDesignIcons.cs" />
+		<MauiAsset Include="Views\FontIcons\IonIcons.cs" />
+		<MauiAsset Include="Views\FontIcons\LineAwesome.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Behaviors\Onboardings\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="MainAppShell.xaml.cs">
+			<DependentUpon>MainAppShell.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoginStyle2Page.xaml.cs">
+		  <DependentUpon>LoginStyle2Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SignUpStyle1Page.xaml.cs">
+		  <DependentUpon>SignUpStyle1Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\LoginStyle1Page.xaml.cs">
+		  <DependentUpon>LoginStyle1Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\BillPaymentConfirmPage.xaml.cs">
+		  <DependentUpon>BillPaymentConfirmPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\EReceiptPage.xaml.cs">
+		  <DependentUpon>EReceiptPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AllServicePage.xaml.cs">
+		  <DependentUpon>AllServicePage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\RequestPaymentPage.xaml.cs">
+		  <DependentUpon>RequestPaymentPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\RequestPaymentDetailsPage.xaml.cs">
+		  <DependentUpon>RequestPaymentDetailsPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\RequestSentPopup.xaml.cs">
+		  <DependentUpon>RequestSentPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\BillPaySuccessPopup.xaml.cs">
+		  <DependentUpon>BillPaySuccessPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\ServiceItemTemplate.xaml.cs">
+		  <DependentUpon>ServiceItemTemplate.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\TransferSuccessPopup.xaml.cs">
+		  <DependentUpon>TransferSuccessPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\CardOptionsPopup.xaml.cs">
+		  <DependentUpon>CardOptionsPopup.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\BillPaymentPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AccountPage.xaml.cs">
+		  <DependentUpon>AccountPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\HomePage.xaml.cs">
+		  <DependentUpon>HomePage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\MobileTopupPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\MyCardsPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\PaymentConfirmPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\AccountUpdatePage.xaml.cs">
+		  <DependentUpon>AccountUpdatePage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ScanQrPayPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\StatisticsPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Templates\ContactItemTemplate.xaml.cs">
+		  <DependentUpon>ContactItemTemplate.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\TransferMoneyPage.xaml.cs">
+		  <DependentUpon>%(Filename)</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<MauiXaml Update="NormalAppShell.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="SampleAppShell.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="MainAppShell.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AlohaKit.Animations" Version="1.0.0" />
+		<PackageReference Include="AsyncAwaitBestPractices" Version="6.0.6" />
+		<PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.6" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.2.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+		<PackageReference Include="CustomSheets" Version="1.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="7.0.5" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-beta.330" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.86" />
+		<PackageReference Include="Microsoft.Maui.Dependencies" Version="6.0.553" />
+		<PackageReference Include="Microsoft.Maui.Extensions" Version="6.0.553" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+		<PackageReference Include="Mopups" Version="1.1.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+		<PackageReference Include="SimpleToolkit.Core" Version="2.0.5" />
+		<PackageReference Include="SimpleToolkit.SimpleShell" Version="2.1.0" />
+		<PackageReference Include="SimpleToolkit.SimpleShell.Controls" Version="2.0.0-preview2" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.61" />
+		<PackageReference Include="System.Runtime.InteropServices.NFloat.Internal" Version="6.0.1" />
+		<PackageReference Include="Xamarin.CommunityToolkit.MauiCompat" Version="2.0.2-preview1013" />
+		<PackageReference Include="XCalendar.Core" Version="4.2.1" />
+		<PackageReference Include="XCalendar.Maui" Version="4.2.1" />
+		<PackageReference Include="ZXing.Net.Maui" Version="0.3.0-preview.1" />
+		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.3.0-preview.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Controls\AppLogo.xaml.cs">
+			<DependentUpon>AppLogo.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\SharedViews\Tags.xaml.cs">
+			<DependentUpon>Tags.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Controls\SharedViews\RoundedCornerImage.xaml.cs">
+			<DependentUpon>RoundedCornerImage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\Translations\AppTranslations.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>AppTranslations.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\Buttons.xaml.cs">
+			<DependentUpon>Buttons.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\Icons.xaml.cs">
+			<DependentUpon>Icons.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Styles\Labels.xaml.cs">
+			<DependentUpon>Labels.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Themes\DarkTheme.xaml.cs">
+			<DependentUpon>DarkTheme.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Themes\InternationalLightTheme.xaml.cs">
+			<DependentUpon>InternationalLightTheme.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ChangePasswordPage.xaml.cs">
+			<DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\DemoStartPage.xaml.cs">
+			<DependentUpon>DemoStartPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\StartBackgroundPage.xaml.cs">
+			<DependentUpon>StartBackgroundPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\StartPage.xaml.cs">
+			<DependentUpon>StartPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\PasswordVerificationPage.xaml.cs">
+			<DependentUpon>PasswordVerificationPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ForgotPasswordPage.xaml.cs">
+			<DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Forms\FullBackgroundSignUpPage.xaml.cs">
+			<DependentUpon>FullBackgroundSignUpPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Forms\FullBackgroundLoginPage.xaml.cs">
+			<DependentUpon>FullBackgroundLoginPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\SignUpStyle2Page.xaml.cs">
+			<DependentUpon>SignUpStyle2Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Forms\SimpleSignUpPage.xaml.cs">
+			<DependentUpon>SimpleSignUpPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Forms\SimpleLoginPage.xaml.cs">
+			<DependentUpon>SimpleLoginPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\WalkthroughImagePage.xaml.cs">
+			<DependentUpon>WalkthroughImagePage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\WalkthroughStyle1Page.xaml.cs">
+			<DependentUpon>WalkthroughStyle1Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\WalkthroughIllustrationPage.xaml.cs">
+			<DependentUpon>WalkthroughIllustrationPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\WalkthroughAnimationPage.xaml.cs">
+			<DependentUpon>WalkthroughAnimationPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\DemoWalkthroughPage.xaml.cs">
+			<DependentUpon>DemoWalkthroughPage.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\Onboardings\WalkthroughStyle2Page.xaml.cs">
+			<DependentUpon>WalkthroughStyle2Page.xaml</DependentUpon>
+		</Compile>
+		<Compile Update="Views\ThemeSettingsPopupPage.xaml.cs">
+			<DependentUpon>ThemeSettingsPopupPage.xaml</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\Translations\AppTranslations.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>AppTranslations.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<MauiXaml Update="MainAppShell.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\BottomSheet.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\AppLogo.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\NumericUpDown.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\Popups\BasePopupPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SettingsView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\CloseButtonIcon.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\ColorEditor.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\Rating.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\Tags.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\RoundedCornerImage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\AvatarWithStatus.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\BadgeView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\ErrorIndicator.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\FlyoutFooter.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\FlyoutHeader.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\GalleryImage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\HeaderTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\ImagePreviewPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\IndicatorViewTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\LoadingIndicator.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Controls\SharedViews\SimpleLoadingIndicator.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="FlyoutMenuPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="MainMenuPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\Buttons.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\Colors.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\Icons.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\Labels.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Styles\Styles.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Themes\DarkTheme.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Themes\InternationalLightTheme.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Themes\LightTheme.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PrivacyPolicyPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SignUpStyle1Page.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\LoginStyle1Page.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\BillPaymentConfirmPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\EReceiptPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\AllServicePage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\RequestPaymentPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\RequestPaymentDetailsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\RequestSentPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\BillPaySuccessPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\ServiceItemTemplate.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TransferSuccessPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\CardOptionsPopup.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\BillPaymentPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\AccountPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\HomePage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\MobileTopupPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\MyCardsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\NotificationsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PaymentConfirmPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\AccountUpdatePage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ScanQrPayPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\StatisticsPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\ContactItemTemplate.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\MyCardItemTemplate.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\NotificationItemTemplate.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Templates\TransactionItemTemplate.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\BackgroundGradientLoginPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\BackgroundGradientSignUpPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\DemoStartPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\Templates\WalkthroughIllustrationStepItemTemplate.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\DemoWalkthroughPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\ColorDialogPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\ConstructListDialogPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\DatePickerDialogPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Popups\SelectItemDialogPopup.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Base\BasePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\FontIcons\FontIconsPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ChangePasswordPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\StartBackgroundPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\StartPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\PasswordVerificationPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ForgotPasswordPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\FullBackgroundSignUpPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\FullBackgroundLoginPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\SignUpStyle2Page.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\SimpleSignUpPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Forms\SimpleLoginPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\LoginStyle2Page.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\IntroducePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\WalkthroughImagePage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\WalkthroughIllustrationPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\WalkthroughAnimationPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\WalkthroughStyle2Page.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\Onboardings\WalkthroughStyle1Page.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\ThemeSettingsPopupPage.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Views\TransferMoneyPage.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-android33.0'">
+		<PackageReference Include="Mopups.PreBaked" Version="1.0.0">
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
+		<PackageReference Include="CardsView.Maui" Version="0.0.2">
+		</PackageReference>
+		<PackageReference Include="Mopups.PreBaked" Version="1.0.0">
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-maccatalyst'">
+	  <PackageReference Include="CardsView.Maui" Version="0.0.2">
+	  </PackageReference>
+	</ItemGroup>
+
+</Project>

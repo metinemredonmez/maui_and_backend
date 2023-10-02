@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<controls:BasePopupPage
+    x:Class="MauiWallet.Views.AccountUpdatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:viewModels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Margin="0,60,0,0"
+    ForegroundColor="Transparent"
+    HorizontalOptions="Fill"
+    VerticalOptions="{OnIdiom Phone='End',
+                              Tablet='End',
+                              Desktop='Fill'}">
+    <Border BackgroundColor="{DynamicResource MainWrapperBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20,20,0,0" />
+        </Border.StrokeShape>
+        <Grid RowDefinitions="Auto, *, Auto">
+            <Label
+                Margin="0,20"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Style="{StaticResource Title2}"
+                Text="{localization:Translate StringUpdateProfile}" />
+
+            <ScrollView
+                Grid.Row="1"
+                Padding="20,16"
+                BackgroundColor="Transparent">
+                <Grid RowDefinitions="Auto,*">
+                    <Border
+                        Grid.Row="0"
+                        BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}"
+                        HeightRequest="90"
+                        Stroke="{DynamicResource White}"
+                        StrokeShape="{RoundRectangle CornerRadius=20}"
+                        StrokeThickness="2"
+                        WidthRequest="90">
+                        <Grid>
+                            <Image HeightRequest="40">
+                                <Image.Source>
+                                    <FontImageSource
+                                        FontFamily="IonIcons"
+                                        Glyph="{x:Static views:IonIcons.IosCameraOutline}"
+                                        Size="25"
+                                        Color="{DynamicResource BaseIconColor}" />
+                                </Image.Source>
+                            </Image>
+                            <Border
+                                BackgroundColor="{DynamicResource PrimaryColor}"
+                                HeightRequest="25"
+                                HorizontalOptions="Center"
+                                Stroke="{DynamicResource White}"
+                                StrokeShape="{RoundRectangle CornerRadius=13}"
+                                StrokeThickness="2"
+                                TranslationX="10"
+                                TranslationY="-10"
+                                VerticalOptions="Center"
+                                WidthRequest="25">
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Text="+"
+                                    TextColor="{DynamicResource White}"
+                                    VerticalOptions="Center" />
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Grid
+                        Grid.Row="1"
+                        Margin="0,20"
+                        ColumnDefinitions="0.5*, 0.5*"
+                        ColumnSpacing="12"
+                        RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                        RowSpacing="16">
+
+                        <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputFirstName}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Column="1"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputLastName}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="1"
+                            Grid.ColumnSpan="2"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputPhoneNumber}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputAddress1}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="3"
+                            Grid.ColumnSpan="2"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputAddress2}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="4"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputCity}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputState}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="5"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputZip}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEntry
+                                HeightRequest="42"
+                                Placeholder="{localization:Translate StringInputCountry}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+
+                        <Border
+                            Grid.Row="6"
+                            Grid.ColumnSpan="2"
+                            Padding="20,5"
+                            BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                            <handlers:BorderlessEditor
+                                HeightRequest="120"
+                                Placeholder="{localization:Translate StringInputDescription}"
+                                PlaceholderColor="{DynamicResource BaseLightTextColor}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                        </Border>
+                    </Grid>
+                </Grid>
+            </ScrollView>
+
+            <Button
+                Grid.Row="2"
+                Margin="20,10"
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Clicked="SubmitButton_Clicked"
+                CornerRadius="14"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="{localization:Translate ButtonSubmit}"
+                TextColor="{DynamicResource White}" />
+        </Grid>
+
+    </Border>
+</controls:BasePopupPage>

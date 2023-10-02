@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.Onboardings.WalkthroughAnimationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    BackgroundColor="{DynamicResource BasePageColor}"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*, Auto">
+        <!--  MAIN ANIMATION BACKGROUND  -->
+        <Grid BackgroundColor="{DynamicResource MainWrapperBackgroundColor}" />
+
+        <!--  ANIMATION CONTENT  -->
+        <skia:SKLottieView
+            HeightRequest="300"
+            HorizontalOptions="CenterAndExpand"
+            RepeatCount="-1"
+            Source="payment.json"
+            TranslationY="-30" />
+
+        <Border
+            Grid.RowSpan="2"
+            Margin="-3"
+            HeightRequest="300"
+            HorizontalOptions="Fill"
+            VerticalOptions="End">
+            <Border.Shadow>
+                <Shadow Opacity="0.3" />
+            </Border.Shadow>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="35,35,0,0" />
+            </Border.StrokeShape>
+
+            <CarouselView
+                FlowDirection="LeftToRight"
+                IndicatorView="IndicatorView"
+                IsSwipeEnabled="False" Loop="True"
+                ItemsSource="{Binding Boardings}"
+                Position="{Binding Position, Mode=TwoWay}">
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Horizontal"
+                        SnapPointsAlignment="Center"
+                        SnapPointsType="MandatorySingle" />
+                </CarouselView.ItemsLayout>
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                            Margin="30,30,30,0"
+                            HorizontalOptions="FillAndExpand"
+                            Spacing="15">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="24"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Title}"
+                                VerticalOptions="Center" />
+
+                            <Label
+                                FontSize="16"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding Subtitle}" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+        </Border>
+
+        <StackLayout Grid.Row="1" Spacing="10">
+            <!--  STEP INDICATORS  -->
+            <IndicatorView
+                x:Name="IndicatorView"
+                Margin="0"
+                HorizontalOptions="Center"
+                IndicatorColor="{DynamicResource BaseLightTextColor}"
+                IndicatorsShape="Circle"
+                SelectedIndicatorColor="{DynamicResource PrimaryColor}" />
+
+            <!--  BUTTON  -->
+            <Button
+                Margin="30,20"
+                Command="{Binding NextCommand}"
+                CornerRadius="14"
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Style="{StaticResource PrimaryActionButtonStyle}"
+                Text="{Binding NextButtonText}" />
+        </StackLayout>
+
+        <!--  CLOSE BUTTON  -->
+        <Button
+            Margin="20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            Command="{Binding SkipCommand}"
+            FontAttributes="Bold"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsSkipButtonVisible}"
+            Text="{localization:Translate ButtonSkip}"
+            TextColor="{DynamicResource BaseTextColor}"
+            VerticalOptions="Start" />
+    </Grid>
+</ContentPage>

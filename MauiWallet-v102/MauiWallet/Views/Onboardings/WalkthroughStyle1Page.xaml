@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.Onboardings.WalkthroughStyle1Page"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
+    xmlns:behaviors="clr-namespace:MauiWallet.Behaviors"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels.Onboardings"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <CarouselView
+            FlowDirection="LeftToRight"
+            IsSwipeEnabled="False"
+            ItemsSource="{Binding Boardings}"
+            Loop="True"
+            Position="{Binding Position, Mode=TwoWay}">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Horizontal"
+                    SnapPointsAlignment="Center"
+                    SnapPointsType="MandatorySingle" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid>
+                            <Grid.Background>
+                                <RadialGradientBrush Center="0.5,0.5">
+                                    <GradientStop Offset="0.1" Color="{Binding BackgroundColor1}" />
+                                    <GradientStop Offset="1.0" Color="{Binding BackgroundColor2}" />
+                                </RadialGradientBrush>
+                            </Grid.Background>
+                        </Grid>
+                        <Frame
+                            Margin="10,20"
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"
+                            HasShadow="False"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand">
+                            <StackLayout
+                                HorizontalOptions="Fill"
+                                Spacing="10"
+                                VerticalOptions="CenterAndExpand">
+                                <!--  BACKGROUND IMAGE  -->
+                                <Image
+                                    x:Name="image"
+                                    Margin="{OnIdiom Phone='0',
+                                                     Tablet='0',
+                                                     Desktop='30,0,30,100'}"
+                                    Aspect="{OnIdiom Phone='AspectFit',
+                                                     Tablet='AspectFit',
+                                                     Desktop='AspectFit'}"
+                                    Source="{Binding ImagePath}" />
+
+                                <!--  TITLE  -->
+                                <Label
+                                    x:Name="headerLabel"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding Title}"
+                                    TextColor="{DynamicResource White}" />
+
+                                <!--  SUBTITLE  -->
+                                <Label
+                                    x:Name="descriptionLabel"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Subtitle}"
+                                    TextColor="{DynamicResource White}" />
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!--  CLOSE BUTTON  -->
+        <Button
+            Margin="20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            Command="{Binding SkipCommand}"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsSkipButtonVisible}"
+            Text="{localization:Translate ButtonSkip}"
+            TextColor="{DynamicResource White}"
+            VerticalOptions="StartAndExpand" />
+
+        <!--  BUTTON  -->
+        <Button
+            Margin="30"
+            BackgroundColor="Transparent"
+            BorderColor="{DynamicResource White}"
+            BorderWidth="1.2"
+            Command="{Binding NextCommand}"
+            CornerRadius="14"
+            FontAttributes="Bold"
+            HeightRequest="50"
+            Text="{Binding NextButtonText}"
+            TextColor="{DynamicResource White}"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

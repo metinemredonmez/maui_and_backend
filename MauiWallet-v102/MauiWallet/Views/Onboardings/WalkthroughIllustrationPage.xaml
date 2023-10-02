@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.Onboardings.WalkthroughIllustrationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    BackgroundColor="{DynamicResource BasePageColor}"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <Grid Padding="30,20,30,20" RowDefinitions="80,*,Auto">
+        <Button
+            Padding="10,5"
+            BackgroundColor="{DynamicResource White}"
+            BorderColor="{DynamicResource Black}"
+            BorderWidth="1"
+            Command="{Binding SkipCommand}"
+            FontSize="12"
+            HeightRequest="26"
+            HorizontalOptions="End"
+            IsVisible="{Binding IsSkipButtonVisible, Mode=TwoWay}"
+            Text="{localization:Translate ButtonSkip}"
+            TextColor="{DynamicResource Black}"
+            VerticalOptions="StartAndExpand" />
+
+        <CarouselView
+            Grid.Row="1"
+            FlowDirection="LeftToRight"
+            IsBounceEnabled="False"
+            IsScrollAnimated="False"
+            IsSwipeEnabled="False" Loop="True"
+            ItemsSource="{Binding Boardings}"
+            Position="{Binding Position, Mode=TwoWay}">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Horizontal"
+                    SnapPointsAlignment="Center"
+                    SnapPointsType="MandatorySingle" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout
+                        Margin="50"
+                        Spacing="20"
+                        VerticalOptions="CenterAndExpand">
+                        <Image
+                            Aspect="AspectFit"
+                            HorizontalOptions="Fill"
+                            Source="{Binding ImagePath}" />
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="24"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Title}" />
+
+                        <Label
+                            FontSize="16"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Subtitle}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!--  Next button  -->
+        <Button
+            Grid.Row="2"
+            BackgroundColor="{DynamicResource White}"
+            BorderColor="{DynamicResource Black}"
+            BorderWidth="1"
+            Command="{Binding NextCommand}"
+            CornerRadius="12"
+            FontAttributes="Bold"
+            HeightRequest="50"
+            Text="{Binding NextButtonText, Mode=TwoWay}"
+            TextColor="{DynamicResource Black}" />
+    </Grid>
+</ContentPage>

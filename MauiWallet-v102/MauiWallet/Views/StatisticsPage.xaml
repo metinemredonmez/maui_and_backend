@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.StatisticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:charts="clr-namespace:MauiWallet.Controls.Charts"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+    xmlns:lvcore="clr-namespace:LiveChartsCore;assembly=LiveChartsCore"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleStatistics}">
+
+    <ContentPage.Resources>
+        <lvc:PaintTasksValueConverter x:Key="paintTaskConverter" />
+        <lvc:WidthConverter x:Key="wConverter" />
+        <lvc:HeightConverter x:Key="hConverter" />
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodels:StatisticsViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid
+            Padding="20"
+            BackgroundColor="{DynamicResource BasePageColor}"
+            RowDefinitions="Auto, 300, Auto"
+            RowSpacing="20">
+
+            <!--  Statistics Graph  -->
+            <Grid>
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="BoldFont"
+                    FontSize="16"
+                    Text="Statistics Graph"
+                    TextColor="{DynamicResource BaseTextColor}" />
+                <!--<Label
+                    FontSize="14"
+                    HorizontalOptions="End"
+                    Text="This week"
+                    TextColor="{DynamicResource PrimaryColor}" />-->
+                <Picker
+                    HorizontalOptions="End"
+                    ItemDisplayBinding="{Binding Duration}"
+                    ItemsSource="{Binding DataSource}"
+                    MinimumWidthRequest="70"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectedItem="{Binding DataSource[0], Mode=OneTime}" />
+            </Grid>
+
+            <lvc:CartesianChart
+                Grid.Row="1"
+                IsVisible="False"
+                Series="{Binding LineSeries}" />
+            <lvc:PieChart
+                Grid.Row="1"
+                AnimationsSpeed="00:00:00.300"
+                EasingFunction="{Binding Source={x:Static lvcore:EasingFunctions.Lineal}}"
+                IsVisible="True"
+                LegendOrientation="Vertical"
+                LegendPosition="Right"
+                Series="{Binding ChartData}">
+                <lvc:PieChart.LegendTemplate>
+                    <DataTemplate>
+                        <Border
+                            Padding="6"
+                            Background="{DynamicResource BasePageColor}"
+                            StrokeShape="{RoundRectangle CornerRadius='5'}"
+                            VerticalOptions="Center">
+                            <StackLayout
+                                BindableLayout.ItemsSource="{Binding Series, Source={RelativeSource AncestorType={x:Type lvc:LegendBindingContext}}}"
+                                HorizontalOptions="CenterAndExpand"
+                                Orientation="{Binding Orientation, Source={RelativeSource AncestorType={x:Type lvc:LegendBindingContext}}}"
+                                Spacing="10"
+                                VerticalOptions="Center">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                            <lvc:MotionCanvas
+                                                Margin="5,0,5,0"
+                                                HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type lvcore:ISeries}}, Converter={StaticResource hConverter}}"
+                                                PaintTasks="{Binding Source={RelativeSource AncestorType={x:Type lvcore:ISeries}}, Converter={StaticResource paintTaskConverter}}"
+                                                VerticalOptions="Center"
+                                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type lvcore:ISeries}}, Converter={StaticResource wConverter}}" />
+                                            <Label FontSize="12" Text="{Binding Name}" />
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </Border>
+                    </DataTemplate>
+                </lvc:PieChart.LegendTemplate>
+            </lvc:PieChart>
+
+            <VerticalStackLayout Grid.Row="2" Spacing="20">
+
+                <Grid ColumnDefinitions="2*, 2*" ColumnSpacing="15">
+                    <!--  Income  -->
+                    <Border
+                        Padding="10,5"
+                        BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                        StrokeShape="{RoundRectangle CornerRadius='10'}">
+                        <Grid ColumnDefinitions="40, *" ColumnSpacing="12">
+                            <Border
+                                Padding="5"
+                                BackgroundColor="{DynamicResource BlurGreen}"
+                                HeightRequest="40"
+                                HorizontalOptions="Start"
+                                Stroke="Transparent"
+                                StrokeShape="{RoundRectangle CornerRadius='20'}"
+                                TranslationY="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontFamily="MauiKitIcons"
+                                    FontSize="{OnIdiom Phone='20',
+                                                       Tablet='25',
+                                                       Desktop='30'}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Opacity="1"
+                                    Text="{x:Static views:MauiKitIcons.ArrowDownBox}"
+                                    TextColor="{DynamicResource Green}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </Border>
+
+                            <StackLayout
+                                Grid.Column="1"
+                                Spacing="0"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="15"
+                                    Text="{Binding TotalIncome, StringFormat='${0:N2}'}"
+                                    TextColor="{DynamicResource BaseTextColor}" />
+                                <Label
+                                    FontSize="14"
+                                    Text="Income"
+                                    TextColor="{DynamicResource BaseLightTextColor}" />
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!--  Expense  -->
+                    <Border
+                        Grid.Column="1"
+                        Padding="10,5"
+                        BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                        StrokeShape="{RoundRectangle CornerRadius='10'}">
+                        <Grid ColumnDefinitions="40, *" ColumnSpacing="12">
+                            <Border
+                                Padding="5"
+                                BackgroundColor="{DynamicResource BlurRed}"
+                                HeightRequest="40"
+                                HorizontalOptions="Start"
+                                Stroke="Transparent"
+                                StrokeShape="{RoundRectangle CornerRadius='20'}"
+                                TranslationY="0"
+                                VerticalOptions="Center"
+                                WidthRequest="40">
+                                <Label
+                                    FontFamily="MauiKitIcons"
+                                    FontSize="{OnIdiom Phone='20',
+                                                       Tablet='25',
+                                                       Desktop='30'}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Opacity="1"
+                                    Text="{x:Static views:MauiKitIcons.ArrowUpBox}"
+                                    TextColor="{DynamicResource Red}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </Border>
+
+                            <StackLayout
+                                Grid.Column="1"
+                                Spacing="0"
+                                VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="15"
+                                    Text="{Binding TotalExpense, StringFormat='${0:N2}'}"
+                                    TextColor="{DynamicResource BaseTextColor}" />
+                                <Label
+                                    FontSize="14"
+                                    Text="Expense"
+                                    TextColor="{DynamicResource BaseLightTextColor}" />
+                            </StackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!--  Transactions  -->
+                <Grid>
+                    <Label
+                        FontAttributes="Bold"
+                        FontFamily="BoldFont"
+                        FontSize="16"
+                        Text="{localization:Translate StringTransactions}"
+                        TextColor="{DynamicResource BaseTextColor}" />
+                    <Label
+                        FontSize="14"
+                        HorizontalOptions="End"
+                        Text="{localization:Translate StringViewAll}"
+                        TextColor="{DynamicResource PrimaryColor}" />
+                </Grid>
+
+                <Grid ColumnDefinitions="2*, 2*" ColumnSpacing="15">
+                    <!--  Income  -->
+                    <Button
+                        HeightRequest="42"
+                        Style="{StaticResource ButtonPrimaryStyle}"
+                        Text="Income"
+                        VerticalOptions="End" />
+
+                    <!--  Expense  -->
+                    <Button
+                        Grid.Column="1"
+                        HeightRequest="42"
+                        Style="{StaticResource ButtonPrimaryOutlineStyle}"
+                        Text="Expense"
+                        VerticalOptions="End" />
+                </Grid>
+
+                <CollectionView
+                    ItemsSource="{Binding TransactionLists}"
+                    SelectionChangedCommand="{Binding TransactionDetailCommand}"
+                    SelectionChangedCommandParameter="{Binding .}"
+                    SelectionMode="Multiple"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="12" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <templates:TransactionItemTemplate />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

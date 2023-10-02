@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.NotificationsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:views="clr-namespace:MauiWallet.Views">
+    <ContentPage.Content>
+        <Grid Padding="15,10" RowDefinitions="Auto, *">
+            <CollectionView
+                Grid.RowSpan="2"
+                ItemsSource="{Binding Notifications}"
+                SelectionMode="Single"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:NotificationItemTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <!--<ListView
+                Grid.Row="1"
+                CachingStrategy="RecycleElement"
+                HasUnevenRows="true"
+                ItemsSource="{Binding Notifications}"
+                ListView.Footer=""
+                SeparatorVisibility="None">
+                <ListView.RowHeight>
+                    <OnIdiom
+                        x:TypeArguments="x:Int32"
+                        Desktop="100"
+                        Phone="90"
+                        Tablet="100" />
+                </ListView.RowHeight>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <templates:NotificationItemTemplate />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+
+            <controls:SimpleLoadingIndicator Grid.RowSpan="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

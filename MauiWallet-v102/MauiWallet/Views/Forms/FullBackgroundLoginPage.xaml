@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.Forms.FullBackgroundLoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title=""
+    BackgroundImageSource="bg_blue.png"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+    <Grid>
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush>
+                    <GradientStop Offset="0.1" Color="#30000000" />
+                    <GradientStop Offset="1.0" Color="#50000000" />
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        <ScrollView VerticalScrollBarVisibility="Default">
+            <FlexLayout
+                Margin="30"
+                AlignContent="Stretch"
+                Direction="Column"
+                JustifyContent="SpaceBetween">
+                <StackLayout
+                    HorizontalOptions="Fill"
+                    Spacing="20"
+                    VerticalOptions="Fill">
+                    <!--  Logo & Header  -->
+                    <StackLayout
+                        Margin="0,20,0,0"
+                        HorizontalOptions="Center"
+                        Spacing="15">
+                        <Border
+                            Padding="0"
+                            BackgroundColor="{DynamicResource White}"
+                            HeightRequest="90"
+                            HorizontalOptions="Center"
+                            Stroke="{DynamicResource White}"
+                            StrokeShape="{RoundRectangle CornerRadius=16}"
+                            StrokeThickness="0"
+                            WidthRequest="90">
+                            <controls:RoundedCornerImage
+                                BackgroundColor="{DynamicResource White}"
+                                HeightRequest="70"
+                                HorizontalOptions="Center"
+                                Source="logo.png"
+                                Stroke="Transparent"
+                                StrokeShape="{RoundRectangle CornerRadius=50}"
+                                VerticalOptions="Center"
+                                WidthRequest="70" />
+                        </Border>
+
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Style="{StaticResource Title2}"
+                            Text="{localization:Translate StringWelcomeToMauiKit}"
+                            TextColor="{DynamicResource White}" />
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="Fill" Spacing="5">
+                        <Label Text="{localization:Translate StringUsername}" TextColor="{DynamicResource White}" />
+                        <Border
+                            Margin="0"
+                            Padding="0"
+                            BackgroundColor="{DynamicResource White}"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{DynamicResource EntryAndEditorsBorderColor}">
+                            <StackLayout
+                                Margin="16,2"
+                                HorizontalOptions="Fill"
+                                Orientation="Horizontal"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontFamily="LineAwesome"
+                                    FontSize="22"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static views:LineAwesome.Phone}"
+                                    TextColor="{DynamicResource BaseIconColor}"
+                                    VerticalOptions="CenterAndExpand" />
+
+                                <handlers:BorderlessEntry
+                                    Margin="8,0"
+                                    HeightRequest="50"
+                                    HorizontalOptions="FillAndExpand"
+                                    Keyboard="Default"
+                                    Placeholder="{localization:Translate StringEnterUsername}"
+                                    PlaceholderColor="{DynamicResource BaseLightTextColor}" />
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+
+                    <StackLayout Spacing="5">
+                        <Label Text="{localization:Translate StringPassword}" TextColor="{DynamicResource White}" />
+                        <Border
+                            Margin="0"
+                            Padding="0"
+                            BackgroundColor="{DynamicResource White}"
+                            HorizontalOptions="FillAndExpand"
+                            Stroke="{DynamicResource EntryAndEditorsBorderColor}">
+                            <StackLayout
+                                Margin="16,2"
+                                Orientation="Horizontal"
+                                VerticalOptions="CenterAndExpand">
+                                <Label
+                                    FontFamily="LineAwesome"
+                                    FontSize="22"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static views:LineAwesome.Lock}"
+                                    TextColor="{DynamicResource BaseIconColor}"
+                                    VerticalOptions="CenterAndExpand" />
+
+                                <handlers:BorderlessEntry
+                                    Margin="8,0"
+                                    HeightRequest="50"
+                                    HorizontalOptions="FillAndExpand"
+                                    Keyboard="Default"
+                                    Placeholder="{localization:Translate StringEnterPassword}"
+                                    PlaceholderColor="{DynamicResource BaseLightTextColor}" />
+                            </StackLayout>
+                        </Border>
+                    </StackLayout>
+
+                    <Label
+                        HorizontalOptions="End"
+                        HorizontalTextAlignment="End"
+                        Text="{localization:Translate StringForgotPassword}"
+                        TextColor="{DynamicResource White}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ForgotPassword_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Button
+                        Margin="0,10,0,0"
+                        BorderWidth="0"
+                        CornerRadius="14"
+                        FontFamily="BoldFont"
+                        FontSize="18"
+                        HeightRequest="50"
+                        Style="{StaticResource ButtonFlatStyle}"
+                        Text="{localization:Translate ButtonSignin}" />
+
+                    <Grid
+                        Padding="40,0"
+                        ColumnDefinitions="0.5*, Auto, 0.5*"
+                        ColumnSpacing="16">
+                        <Rectangle
+                            Fill="{DynamicResource White}"
+                            HeightRequest="1"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="{localization:Translate StringOr}"
+                            TextColor="{DynamicResource White}"
+                            VerticalOptions="Center" />
+                        <Rectangle
+                            Grid.Column="2"
+                            Fill="{DynamicResource White}"
+                            HeightRequest="1"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <StackLayout
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal"
+                        Spacing="25">
+                        <Border
+                            Padding="20,8"
+                            BackgroundColor="{DynamicResource White}"
+                            Stroke="{DynamicResource White}"
+                            StrokeShape="{RoundRectangle CornerRadius='8'}">
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="28"
+                                Source="facebook.png"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <Border
+                            Padding="20,8"
+                            BackgroundColor="{DynamicResource White}"
+                            Stroke="{DynamicResource White}"
+                            StrokeShape="{RoundRectangle CornerRadius='8'}">
+
+                            <Image
+                                Aspect="AspectFit"
+                                HeightRequest="28"
+                                Source="google.png"
+                                VerticalOptions="Center" />
+                        </Border>
+
+                        <Border
+                            Padding="20,8"
+                            BackgroundColor="{DynamicResource White}"
+                            Stroke="{DynamicResource White}"
+                            StrokeShape="{RoundRectangle CornerRadius='8'}">
+                            <Label
+                                FontFamily="FaBrands"
+                                FontSize="28"
+                                HeightRequest="28"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="{x:Static views:FaBrands.Apple}"
+                                TextColor="{DynamicResource BaseIconColor}"
+                                VerticalOptions="Center"
+                                WidthRequest="28" />
+                        </Border>
+                    </StackLayout>
+
+                </StackLayout>
+
+                <Label
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="End">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                FontFamily="RegularFont"
+                                Text="{localization:Translate StringDontHaveAccount}"
+                                TextColor="{DynamicResource White}" />
+                            <Span Text="  " />
+                            <Span
+                                FontAttributes="Bold"
+                                FontFamily="PoppinsSemiBold"
+                                FontSize="16"
+                                Text="{localization:Translate StringSignup}"
+                                TextColor="{DynamicResource PrimaryColor}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </FlexLayout>
+        </ScrollView>
+
+        <!--  Back Button  -->
+        <Border
+            Margin="20"
+            Padding="0"
+            BackgroundColor="Transparent"
+            HeightRequest="40"
+            HorizontalOptions="End"
+            StrokeThickness="0"
+            VerticalOptions="Start"
+            WidthRequest="40">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GoBack_Tapped" />
+            </Border.GestureRecognizers>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Image
+                HeightRequest="30"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="IonIcons"
+                        Glyph="{x:Static views:IonIcons.AndroidClose}"
+                        Size="25"
+                        Color="{DynamicResource White}" />
+                </Image.Source>
+            </Image>
+        </Border>
+    </Grid>
+</ContentPage>

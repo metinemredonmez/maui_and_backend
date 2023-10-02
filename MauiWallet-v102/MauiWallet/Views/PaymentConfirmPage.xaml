@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.PaymentConfirmPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitlePaymentConfirm}">
+    <Grid
+        Padding="20"
+        BackgroundColor="{DynamicResource BasePageColor}"
+        RowDefinitions="*, 60">
+
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="20" VerticalOptions="StartAndExpand">
+                <!--  Avatar  -->
+                <controls:RoundedCornerImage
+                    HeightRequest="80"
+                    Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-2.jpg"
+                    StrokeShape="{RoundRectangle CornerRadius='40'}"
+                    WidthRequest="80" />
+
+                <Label
+                    FontFamily="BoldFont"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="$350.00"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <Label HorizontalOptions="Center" Text="Below is your transfer summary" />
+
+                <Border
+                    Padding="15,10"
+                    BackgroundColor="#EAEEF6"
+                    Stroke="{DynamicResource FrameBorder}"
+                    StrokeShape="{RoundRectangle CornerRadius=10}"
+                    StrokeThickness="1">
+                    <HorizontalStackLayout Spacing="8">
+                        <Border
+                            Padding="0"
+                            BackgroundColor="#B8C7E4"
+                            HeightRequest="20"
+                            HorizontalOptions="Start"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius='10'}"
+                            TranslationY="0"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
+                            <Label
+                                FontFamily="IonIcons"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Opacity="1"
+                                Text="{x:Static views:IonIcons.Information}"
+                                TextColor="{DynamicResource PrimaryColor}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+                        <Label
+                            FontFamily="MediumFont"
+                            FontSize="13"
+                            Text="Transfer from MauiPay will not cost any fee!"
+                            TextColor="#0D4C92"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Grid
+                    ColumnDefinitions="Auto, *"
+                    RowDefinitions="Auto, 1, Auto, 1, Auto, 1, Auto, 1, Auto"
+                    RowSpacing="10">
+
+                    <Label Text="{localization:Translate StringTransferTo}" VerticalOptions="Center" />
+                    <HorizontalStackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="EndAndExpand"
+                        Spacing="5">
+                        <Border
+                            HeightRequest="30"
+                            HorizontalOptions="End"
+                            Stroke="#EAEEF6"
+                            StrokeThickness="1"
+                            VerticalOptions="Start"
+                            WidthRequest="30">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15" />
+                            </Border.StrokeShape>
+                            <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-2.jpg" />
+                        </Border>
+                        <Label
+                            FontAttributes="Bold"
+                            Text="Andrew Ostergard"
+                            TextColor="{DynamicResource BaseTextColor}"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <Rectangle
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Fill="{DynamicResource BaseSeparatorColor}"
+                        HeightRequest="1"
+                        IsVisible="{OnIdiom Phone='True',
+                                            Tablet='True',
+                                            Desktop='False'}" />
+
+                    <Label
+                        Grid.Row="2"
+                        Text="{localization:Translate StringTransferAmount}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="$350.00"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Rectangle
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Fill="{DynamicResource BaseSeparatorColor}"
+                        HeightRequest="1"
+                        IsVisible="{OnIdiom Phone='True',
+                                            Tablet='True',
+                                            Desktop='False'}" />
+
+                    <Label
+                        Grid.Row="4"
+                        Text="{localization:Translate StringTime}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Aug 25,2022 - 10:30 AM"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Rectangle
+                        Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        Fill="{DynamicResource BaseSeparatorColor}"
+                        HeightRequest="1"
+                        IsVisible="{OnIdiom Phone='True',
+                                            Tablet='True',
+                                            Desktop='False'}" />
+
+                    <Label
+                        Grid.Row="6"
+                        Text="{localization:Translate StringCategory}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Salary"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Rectangle
+                        Grid.Row="7"
+                        Grid.ColumnSpan="2"
+                        Fill="{DynamicResource BaseSeparatorColor}"
+                        HeightRequest="1"
+                        IsVisible="{OnIdiom Phone='True',
+                                            Tablet='True',
+                                            Desktop='False'}" />
+
+                    <Label
+                        Grid.Row="8"
+                        Text="{localization:Translate StringNote}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Thanks for your hard work!"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                </Grid>
+
+                <Button
+                    BackgroundColor="{DynamicResource BlurPrimary}"
+                    CornerRadius="14"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    HeightRequest="50"
+                    Text="{localization:Translate ButtonChange}"
+                    TextColor="{DynamicResource PrimaryColor}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button
+            Grid.Row="1"
+            Command="{Binding PaymentConfirmCommand}"
+            HeightRequest="50"
+            Style="{StaticResource ButtonPrimaryStyle}"
+            Text="{localization:Translate ButtonConfirm}"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

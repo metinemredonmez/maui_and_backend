@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<controls:BasePopupPage
+    x:Class="MauiWallet.Views.ThemeSettingsPopupPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:enums="clr-namespace:MauiWallet.Enums"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Margin="0"
+    ForegroundColor="Transparent"
+    HorizontalOptions="Fill"
+    VerticalOptions="{OnIdiom Phone='Start',
+                              Desktop='Start',
+                              Tablet='Start'}">
+
+    <controls:BasePopupPage.Resources>
+        <Style TargetType="Border">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="Stroke" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="Stroke" Value="{Binding Color}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </controls:BasePopupPage.Resources>
+
+    <Border
+        x:Name="MainContent"
+        BackgroundColor="{DynamicResource BasePageColor}"
+        Opacity="1"
+        Stroke="{DynamicResource BasePageColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="0,0,36,36" />
+        </Border.StrokeShape>
+
+        <Grid RowDefinitions="30, Auto, Auto, 44, Auto, Auto">
+            <StackLayout
+                Grid.Row="1"
+                Padding="15,0"
+                HorizontalOptions="Fill"
+                Orientation="Horizontal"
+                Spacing="0">
+
+                <Label
+                    x:Name="pickThemeText"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    Text="{localization:Translate StringChooseTheme}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <!--  Close Icon  -->
+                <Grid
+                    HorizontalOptions="EndAndExpand"
+                    TranslationY="-15"
+                    WidthRequest="30">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCloseSetting_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <Label
+                        FontFamily="IonIcons"
+                        FontSize="25"
+                        HorizontalOptions="EndAndExpand"
+                        Text="{x:Static views:IonIcons.AndroidClose}"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Start"
+                        WidthRequest="30">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCloseSetting_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+            </StackLayout>
+
+            <Grid
+                Grid.Row="2"
+                Margin="25"
+                ColumnDefinitions="*, *"
+                ColumnSpacing="12">
+                <Button
+                    x:Name="lightThemeButton"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    Clicked="OnSettingLightTheme_Clicked"
+                    CornerRadius="10"
+                    FontAttributes="Bold"
+                    HeightRequest="44"
+                    Text="{localization:Translate ButtonLightTheme}"
+                    TextColor="{DynamicResource White}" />
+
+                <Button
+                    x:Name="darkThemeButton"
+                    Grid.Column="1"
+                    BackgroundColor="{DynamicResource Gray900}"
+                    Clicked="OnSettingDarkTheme_Clicked"
+                    CornerRadius="10"
+                    FontAttributes="Bold"
+                    HeightRequest="44"
+                    Text="{localization:Translate ButtonDarkTheme}"
+                    TextColor="{DynamicResource White}" />
+            </Grid>
+
+            <Label
+                x:Name="pickColorText"
+                Grid.Row="3"
+                Margin="20,7,0,0"
+                FontSize="15"
+                HorizontalOptions="Start"
+                HorizontalTextAlignment="Start"
+                Text="{localization:Translate StringPickColor}"
+                TextColor="{DynamicResource BaseTextColor}" />
+
+            <CollectionView
+                x:Name="colorPaletteCollectionView"
+                Grid.Row="4"
+                HeightRequest="50"
+                Margin="20,0,20,30"
+                HorizontalOptions="Center"
+                SelectedItem="{Binding SelectedPrimaryColorItem}"
+                SelectionChanged="colorPaletteCollectionView_SelectionChanged"
+                SelectionMode="Single">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Padding="5"
+                            HeightRequest="40"
+                            StrokeThickness="2"
+                            WidthRequest="45">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10" />
+                            </Border.StrokeShape>
+                            <RoundRectangle
+                                CornerRadius="8"
+                                Fill="{Binding Color}"
+                                HeightRequest="30"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                WidthRequest="35" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid
+                Grid.Row="5"
+                Padding="20"
+                ColumnDefinitions="*, Auto"
+                HorizontalOptions="Fill"
+                IsVisible="False"
+                VerticalOptions="Center">
+                <Label
+                    FontSize="15"
+                    Text="{localization:Translate StringIsRTL}"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+
+                <Switch
+                    Grid.Column="1"
+                    IsToggled="{Binding EnableRTL}"
+                    OnColor="{DynamicResource BaseIconColor}"
+                    ThumbColor="{DynamicResource PrimaryColor}"
+                    Toggled="OnRTL_Toggled" />
+            </Grid>
+
+        </Grid>
+    </Border>
+
+</controls:BasePopupPage>

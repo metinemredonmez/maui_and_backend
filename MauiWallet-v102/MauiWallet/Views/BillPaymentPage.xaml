@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.BillPaymentPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleBillPayment}">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            BackgroundColor="{DynamicResource BasePageColor}"
+            Spacing="20">
+            <Grid HeightRequest="240">
+                <Border
+                    Margin="-3,-3"
+                    Padding="20"
+                    BackgroundColor="#00235B"
+                    HeightRequest="180"
+                    VerticalOptions="Start">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20,20,40,40" />
+                    </Border.StrokeShape>
+                    <Grid>
+                        <Label Text="Reminder" TextColor="{DynamicResource OverImageTextColor}" />
+                        <Label
+                            HorizontalOptions="End"
+                            Text="Aug 23, 2022"
+                            TextColor="{DynamicResource OverImageTextColor}" />
+                    </Grid>
+                </Border>
+
+                <Border
+                    Margin="8,50,8,0"
+                    Padding="20"
+                    BackgroundColor="#EAEEF6"
+                    StrokeShape="{RoundRectangle CornerRadius=20}"
+                    VerticalOptions="FillAndExpand">
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, *, 60">
+                        <Label Text="You have unpaid bill" />
+
+                        <Label
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            HorizontalOptions="End"
+                            Text="Edit"
+                            TextColor="{DynamicResource PrimaryColor}" />
+
+                        <Label
+                            Grid.Row="1"
+                            FontFamily="BoldFont"
+                            FontSize="30"
+                            Text="$20.00"
+                            TextColor="{DynamicResource BaseTextColor}"
+                            VerticalOptions="Center" />
+
+                        <HorizontalStackLayout
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalOptions="EndAndExpand">
+                            <Border
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Stroke="#EAEEF6"
+                                StrokeThickness="3"
+                                TranslationX="7"
+                                VerticalOptions="Start"
+                                WidthRequest="40">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-1.jpg" />
+                            </Border>
+                            <Border
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Stroke="#EAEEF6"
+                                StrokeThickness="3"
+                                TranslationX="7"
+                                VerticalOptions="Start"
+                                WidthRequest="40">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-2.jpg" />
+                            </Border>
+                            <Border
+                                HeightRequest="40"
+                                HorizontalOptions="End"
+                                Stroke="#EAEEF6"
+                                StrokeThickness="3"
+                                VerticalOptions="Start"
+                                WidthRequest="40">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-3.jpg" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+
+                        <Button
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Command="{Binding PayNowCommand}"
+                            HeightRequest="50"
+                            Style="{StaticResource ButtonPrimaryStyle}"
+                            Text="Pay Now"
+                            VerticalOptions="End" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--  Bill Categories  -->
+            <Grid Margin="0,10" ColumnDefinitions="1*,1*,1*,1*">
+
+                <StackLayout
+                    Grid.Column="0"
+                    HorizontalOptions="Center"
+                    Spacing="5">
+
+                    <Border
+                        Padding="5"
+                        BackgroundColor="#EAEEF6"
+                        HeightRequest="60"
+                        HorizontalOptions="Start"
+                        Stroke="Transparent"
+                        StrokeShape="{RoundRectangle CornerRadius='30'}"
+                        TranslationY="0"
+                        VerticalOptions="Center"
+                        WidthRequest="60">
+                        <Label
+                            FontFamily="MauiKitIcons"
+                            FontSize="{OnIdiom Phone='30',
+                                               Tablet='35',
+                                               Desktop='30'}"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Opacity="1"
+                            Text="{x:Static views:MauiKitIcons.LightbulbOn}"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+                    <Label HorizontalOptions="Center" Text="Electricity" />
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    Spacing="5">
+
+                    <Border
+                        Padding="5"
+                        BackgroundColor="#EAEEF6"
+                        HeightRequest="60"
+                        HorizontalOptions="Start"
+                        Stroke="Transparent"
+                        StrokeShape="{RoundRectangle CornerRadius='30'}"
+                        TranslationY="0"
+                        VerticalOptions="Center"
+                        WidthRequest="60">
+                        <Label
+                            FontFamily="MauiKitIcons"
+                            FontSize="{OnIdiom Phone='30',
+                                               Tablet='35',
+                                               Desktop='30'}"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Opacity="1"
+                            Text="{x:Static views:MauiKitIcons.Water}"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+                    <Label HorizontalOptions="Center" Text="Water" />
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Column="2"
+                    HorizontalOptions="Center"
+                    Spacing="5">
+
+                    <Border
+                        Padding="5"
+                        BackgroundColor="#EAEEF6"
+                        HeightRequest="60"
+                        HorizontalOptions="Start"
+                        Stroke="Transparent"
+                        StrokeShape="{RoundRectangle CornerRadius='30'}"
+                        TranslationY="0"
+                        VerticalOptions="Center"
+                        WidthRequest="60">
+                        <Label
+                            FontFamily="MauiKitIcons"
+                            FontSize="{OnIdiom Phone='30',
+                                               Tablet='35',
+                                               Desktop='30'}"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Opacity="1"
+                            Text="{x:Static views:MauiKitIcons.Wifi}"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+                    <Label HorizontalOptions="Center" Text="Internet" />
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Column="3"
+                    HorizontalOptions="Center"
+                    Spacing="5">
+
+                    <Border
+                        Padding="5"
+                        BackgroundColor="#EAEEF6"
+                        HeightRequest="60"
+                        HorizontalOptions="Start"
+                        Stroke="Transparent"
+                        StrokeShape="{RoundRectangle CornerRadius='30'}"
+                        TranslationY="0"
+                        VerticalOptions="Center"
+                        WidthRequest="60">
+                        <Label
+                            FontFamily="MauiKitIcons"
+                            FontSize="{OnIdiom Phone='30',
+                                               Tablet='35',
+                                               Desktop='30'}"
+                            HorizontalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            Opacity="1"
+                            Text="{x:Static views:MauiKitIcons.Television}"
+                            TextColor="{DynamicResource PrimaryColor}"
+                            VerticalOptions="CenterAndExpand" />
+                    </Border>
+                    <Label HorizontalOptions="Center" Text="Television" />
+                </StackLayout>
+            </Grid>
+
+            <!--  Nearby Friends  -->
+            <Grid>
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="BoldFont"
+                    FontSize="16"
+                    Text="Nearby Friends"
+                    TextColor="{DynamicResource BaseTextColor}" />
+                <Label
+                    FontSize="14"
+                    HorizontalOptions="End"
+                    Text="View all"
+                    TextColor="{DynamicResource PrimaryColor}" />
+            </Grid>
+            <Border
+                Stroke="{DynamicResource DefaultBorder}"
+                StrokeDashArray="10,8"
+                StrokeDashOffset="1"
+                StrokeShape="{RoundRectangle CornerRadius='16'}"
+                StrokeThickness="1">
+
+                <Grid Margin="0,10" ColumnDefinitions="1*,1*,1*,1*">
+
+                    <StackLayout
+                        Grid.Column="0"
+                        HorizontalOptions="Center"
+                        Spacing="5">
+
+                        <Border
+                            Padding="5"
+                            BackgroundColor="{DynamicResource PrimaryColor}"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius='30'}"
+                            TranslationY="0"
+                            VerticalOptions="Center"
+                            WidthRequest="50">
+                            <Label
+                                FontFamily="MauiKitIcons"
+                                FontSize="{OnIdiom Phone='30',
+                                                   Tablet='35',
+                                                   Desktop='30'}"
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Opacity="1"
+                                Text="{x:Static views:MauiKitIcons.Plus}"
+                                TextColor="{DynamicResource White}"
+                                VerticalOptions="CenterAndExpand" />
+                        </Border>
+                        <Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="Add New" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Spacing="5">
+
+                        <Border
+                            Padding="0"
+                            BackgroundColor="#EAEEF6"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius='30'}"
+                            TranslationY="0"
+                            VerticalOptions="Center"
+                            WidthRequest="50">
+                            <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-4.jpg" />
+                        </Border>
+                        <Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="Carla Bator" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Column="2"
+                        HorizontalOptions="Center"
+                        Spacing="5">
+
+                        <Border
+                            Padding="0"
+                            BackgroundColor="#EAEEF6"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius='30'}"
+                            TranslationY="0"
+                            VerticalOptions="Center"
+                            WidthRequest="50">
+                            <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-5.jpg" />
+                        </Border>
+                        <Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="Emery Gets" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Column="3"
+                        HorizontalOptions="Center"
+                        Spacing="5">
+
+                        <Border
+                            Padding="0"
+                            BackgroundColor="#EAEEF6"
+                            HeightRequest="50"
+                            HorizontalOptions="Center"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius='30'}"
+                            TranslationY="0"
+                            VerticalOptions="Center"
+                            WidthRequest="50">
+                            <Image Aspect="AspectFill" Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ecommerce/users/150-6.jpg" />
+                        </Border>
+                        <Label
+                            FontSize="13"
+                            HorizontalOptions="Center"
+                            Text="Lisa Weslay" />
+                    </StackLayout>
+                </Grid>
+            </Border>
+
+            <!--  Paid bills This month  -->
+            <Grid>
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="BoldFont"
+                    FontSize="16"
+                    Text="This Month"
+                    TextColor="{DynamicResource BaseTextColor}" />
+
+            </Grid>
+
+            <Grid ColumnDefinitions="40, *, Auto" ColumnSpacing="12">
+                <Border
+                    Padding="5"
+                    BackgroundColor="#EAEEF6"
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    Stroke="Transparent"
+                    StrokeShape="{RoundRectangle CornerRadius='20'}"
+                    TranslationY="0"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Label
+                        FontFamily="MauiKitIcons"
+                        FontSize="{OnIdiom Phone='20',
+                                           Tablet='25',
+                                           Desktop='30'}"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Opacity="1"
+                        Text="{x:Static views:MauiKitIcons.LightbulbOn}"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+                <StackLayout Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="15"
+                        Text="Electricity"
+                        TextColor="{DynamicResource BaseTextColor}" />
+                    <Label
+                        FontSize="14"
+                        Text="E-45438989 - Aug 22, 2022"
+                        TextColor="{DynamicResource BaseLightTextColor}" />
+                </StackLayout>
+
+                <Label
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    Text="-$30.00"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+            </Grid>
+
+            <Rectangle Fill="{DynamicResource BaseSeparatorColor}" HeightRequest="1" />
+
+            <Grid ColumnDefinitions="40, *, Auto" ColumnSpacing="12">
+                <Border
+                    Padding="5"
+                    BackgroundColor="#EAEEF6"
+                    HeightRequest="40"
+                    HorizontalOptions="Start"
+                    Stroke="Transparent"
+                    StrokeShape="{RoundRectangle CornerRadius='20'}"
+                    TranslationY="0"
+                    VerticalOptions="Center"
+                    WidthRequest="40">
+                    <Label
+                        FontFamily="MauiKitIcons"
+                        FontSize="{OnIdiom Phone='20',
+                                           Tablet='25',
+                                           Desktop='30'}"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Center"
+                        Opacity="1"
+                        Text="{x:Static views:MauiKitIcons.Water}"
+                        TextColor="{DynamicResource PrimaryColor}"
+                        VerticalOptions="CenterAndExpand" />
+                </Border>
+
+                <StackLayout Grid.Column="1">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="15"
+                        Text="Water"
+                        TextColor="{DynamicResource BaseTextColor}" />
+                    <Label
+                        FontSize="14"
+                        Text="W-6059047 - Aug 22, 2022"
+                        TextColor="{DynamicResource BaseLightTextColor}" />
+                </StackLayout>
+
+                <Label
+                    Grid.Column="2"
+                    FontAttributes="Bold"
+                    FontSize="15"
+                    Text="-$20.00"
+                    TextColor="{DynamicResource BaseTextColor}"
+                    VerticalOptions="Center" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

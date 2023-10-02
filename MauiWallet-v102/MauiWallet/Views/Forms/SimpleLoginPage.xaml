@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.Forms.SimpleLoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:handlers="clr-namespace:MauiWallet.Handlers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="LoginPage"
+    BackgroundColor="{DynamicResource BasePageColor}"
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <Border Margin="-5" BackgroundColor="Transparent">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="0,0,50,50" />
+                </Border.StrokeShape>
+                <Grid>
+                    <Image Aspect="AspectFill" Source="bg_trans.png" />
+                    <Grid BackgroundColor="{DynamicResource Primary}" Opacity=".6" />
+
+                    <VerticalStackLayout
+                        Margin="0,30,0,0"
+                        HorizontalOptions="CenterAndExpand"
+                        Spacing="12"
+                        VerticalOptions="StartAndExpand">
+
+                        <controls:RoundedCornerImage
+                            BackgroundColor="{DynamicResource White}"
+                            HeightRequest="80"
+                            HorizontalOptions="Center"
+                            Source="logo.png"
+                            Stroke="Transparent"
+                            StrokeShape="{RoundRectangle CornerRadius=40}"
+                            VerticalOptions="Center"
+                            WidthRequest="80" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            HorizontalOptions="Center"
+                            Text="{localization:Translate StringWelcomeToMauiKit}"
+                            TextColor="{DynamicResource White}" />
+                        <Label
+                            HorizontalOptions="Center"
+                            Text="{localization:Translate StringUseYourCredentials}"
+                            TextColor="{DynamicResource White}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border 
+                Grid.Row="1"
+                Padding="20"
+                Margin="20,-100,20,20"
+                BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+                StrokeShape="{RoundRectangle CornerRadius='20'}"
+                VerticalOptions="Center">
+                <VerticalStackLayout Padding="0,20,0,0" Spacing="20">
+
+                    <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                        <handlers:BorderlessEntry
+                            HeightRequest="42"
+                            Keyboard="Email"
+                            Placeholder="{localization:Translate StringEmail}"
+                            PlaceholderColor="{DynamicResource BaseTextColor}" />
+                    </Border>
+
+                    <Border Padding="20,5" BackgroundColor="{DynamicResource EntryAndEditorsBackgroundColor}">
+                        <handlers:BorderlessEntry
+                            HeightRequest="42"
+                            IsPassword="False"
+                            Keyboard="Default"
+                            Placeholder="{localization:Translate StringPassword}"
+                            PlaceholderColor="{DynamicResource BaseTextColor}" />
+                    </Border>
+
+                    <Button
+                        x:Name="Login"
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        CornerRadius="14"
+                        HeightRequest="50"
+                        Text="{localization:Translate ButtonLogin}"
+                        TextColor="{DynamicResource White}" />
+
+                    <Label HorizontalOptions="Center" Text="{localization:Translate StringLoginWith}" />
+
+                    <Button
+                        BackgroundColor="{StaticResource FacebookBlue}"
+                        CornerRadius="14"
+                        HeightRequest="50"
+                        Text="{localization:Translate ButtonFacebook}"
+                        TextColor="{DynamicResource White}" />
+
+                    <Button
+                        BackgroundColor="{StaticResource TwitterBlue}"
+                        CornerRadius="14"
+                        HeightRequest="50"
+                        Text="{localization:Translate ButtonTwitter}"
+                        TextColor="{DynamicResource White}" />
+
+                    <Label
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        Text="{localization:Translate StringForgotPassword}"
+                        TextColor="{DynamicResource BaseTextColor}" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+            <!--  Back Button  -->
+            <Border
+                Margin="20"
+                Padding="0"
+                BackgroundColor="Transparent"
+                HeightRequest="40"
+                HorizontalOptions="End"
+                StrokeThickness="0"
+                VerticalOptions="Start"
+                WidthRequest="40">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GoBack_Tapped" />
+                </Border.GestureRecognizers>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <Image
+                    HeightRequest="30"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="IonIcons"
+                            Glyph="{x:Static views:IonIcons.AndroidClose}"
+                            Size="25"
+                            Color="{DynamicResource White}" />
+                    </Image.Source>
+                </Image>
+            </Border>
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.EReceiptPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate PageTitleEReceipt}">
+    <Grid
+        Padding="15,20"
+        BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+        RowDefinitions="*, 60">
+
+        <VerticalStackLayout Spacing="20" VerticalOptions="StartAndExpand">
+            <!--  Avatar  -->
+            <controls:RoundedCornerImage
+                HeightRequest="90"
+                Source="https://raw.githubusercontent.com/tlssoftware/raw-material/master/maui-kit/ewallet/icon_netflix.png"
+                StrokeShape="{RoundRectangle CornerRadius='45'}"
+                WidthRequest="90" />
+
+            <Border Padding="20,30" StrokeShape="{RoundRectangle CornerRadius=16}">
+                <Grid
+                    ColumnDefinitions="Auto, *"
+                    RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                    RowSpacing="15">
+
+                    <Label
+                        Grid.Row="0"
+                        Text="{localization:Translate StringTransferAmount}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="$34.35"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="1"
+                        Text="{localization:Translate StringTransferTo}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Netflix"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="2"
+                        Text="{localization:Translate StringSchedule}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="No"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="3"
+                        Text="{localization:Translate StringHours}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="No"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="4"
+                        Text="{localization:Translate StringTransactionTime}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Aug 25,2022 - 10:30 AM"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="5"
+                        Text="{localization:Translate StringTransactionID}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="78557693"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="6"
+                        Text="{localization:Translate StringCategory}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Entertainment"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="7"
+                        Text="{localization:Translate StringNote}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="--"
+                        TextColor="{DynamicResource BaseTextColor}"
+                        VerticalOptions="Center" />
+
+                    <Label
+                        Grid.Row="8"
+                        Text="{localization:Translate StringStatus}"
+                        TextColor="{DynamicResource BaseLightTextColor}"
+                        VerticalOptions="Center" />
+                    <Border
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Padding="10,3"
+                        BackgroundColor="{DynamicResource PrimaryColor}"
+                        HorizontalOptions="End"
+                        Stroke="Transparent"
+                        StrokeShape="{RoundRectangle CornerRadius='8'}">
+                        <Label
+                            FontSize="12"
+                            HorizontalOptions="Center"
+                            Text="Completed"
+                            TextColor="{DynamicResource White}"
+                            VerticalOptions="Center" />
+                    </Border>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+
+        <Button
+            Grid.Row="1"
+            HeightRequest="50"
+            Style="{StaticResource ButtonPrimaryStyle}"
+            Text="{localization:Translate ButtonDownloadReceipt}"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

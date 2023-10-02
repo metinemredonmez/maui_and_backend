@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<controls:BasePopupPage
+    x:Class="MauiWallet.Views.TransferSuccessPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    Title=""
+    ForegroundColor="Transparent"
+    HorizontalOptions="{OnIdiom Phone='Fill',
+                                Tablet='Fill',
+                                Desktop='Fill'}"
+    VerticalOptions="{OnIdiom Phone='Center',
+                              Tablet='Center',
+                              Desktop='End'}">
+    <Border
+        Margin="30,20"
+        BackgroundColor="{DynamicResource MainWrapperBackgroundColor}"
+        StrokeShape="{RoundRectangle CornerRadius='20'}">
+
+        <StackLayout
+            Padding="20,30"
+            Spacing="16"
+            VerticalOptions="Center">
+
+            <Image
+                HeightRequest="120"
+                HorizontalOptions="Center"
+                Source="transfer_success" />
+
+            <Label
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Style="{StaticResource Title1}"
+                Text="Transfer Successful!"
+                TextColor="{DynamicResource PrimaryColor}" />
+
+            <Label
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="Payment successfully sent!" />
+
+            <Button
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Clicked="ViewReceiptButton_Clicked"
+                CornerRadius="14"
+                FontAttributes="Bold"
+                FontSize="16"
+                HeightRequest="50"
+                Text="{localization:Translate ButtonViewReceipt}"
+                TextColor="{DynamicResource White}" />
+
+            <Button
+                BackgroundColor="{DynamicResource BlurPrimary}"
+                Clicked="CloseButton_Clicked"
+                CornerRadius="14"
+                FontAttributes="Bold"
+                FontSize="16"
+                HeightRequest="50"
+                Text="{localization:Translate ButtonClose}"
+                TextColor="{DynamicResource PrimaryColor}" />
+        </StackLayout>
+    </Border>
+</controls:BasePopupPage>

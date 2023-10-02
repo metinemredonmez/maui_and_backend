@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiWallet.Views.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:animations="clr-namespace:AlohaKit.Animations;assembly=AlohaKit.Animations"
+    xmlns:controls="clr-namespace:MauiWallet.Controls"
+    xmlns:converters="clr-namespace:MauiWallet.Converters"
+    xmlns:helpers="clr-namespace:MauiWallet.Helpers"
+    xmlns:local="clr-namespace:MauiWallet"
+    xmlns:localization="clr-namespace:MauiWallet.Resources.Translations"
+    xmlns:models="clr-namespace:MauiWallet.Models"
+    xmlns:templates="clr-namespace:MauiWallet.Views.Templates"
+    xmlns:viewmodels="clr-namespace:MauiWallet.ViewModels"
+    xmlns:views="clr-namespace:MauiWallet.Views"
+    Title="{localization:Translate StringAppName}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToColorConverter x:Key="BooleanToColorConverter" />
+
+            <Style TargetType="templates:TransactionItemTemplate">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="{DynamicResource BasePageColor}" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollView
+            Grid.RowSpan="2"
+            Padding="0,0,0,50"
+            VerticalScrollBarVisibility="Never">
+            <VisualElement.Behaviors>
+                <animations:ScrollViewScrollBehavior x:Name="ScrollBehavior" />
+            </VisualElement.Behaviors>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border
+                    Margin="-3,-5,-3,0"
+                    Padding="{OnIdiom Phone='15,0,15,15',
+                                      Tablet='30,20',
+                                      Desktop='60,20'}"
+                    BackgroundColor="{DynamicResource BasePageColor}">
+
+                    <StackLayout>
+                        <Grid>
+                            <StackLayout Margin="15,0">
+                                <Label
+                                    FontSize="14"
+                                    Text="Good morning,"
+                                    TextColor="{DynamicResource BaseLightTextColor}" />
+                                <Label
+                                    FontFamily="BoldFont"
+                                    FontSize="17"
+                                    Text="Alex Wilson"
+                                    TextColor="{DynamicResource BaseTextColor}" />
+                            </StackLayout>
+
+                            <!--  Notifications Icon  -->
+                            <Border
+                                Padding="5"
+                                BackgroundColor="Transparent"
+                                HeightRequest="46"
+                                HorizontalOptions="End"
+                                Stroke="{DynamicResource DefaultBorder}"
+                                StrokeShape="{RoundRectangle CornerRadius='25'}"
+                                StrokeThickness="1"
+                                TranslationY="0"
+                                VerticalOptions="Center"
+                                WidthRequest="46">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GotoNotificationCommand}" />
+                                </Border.GestureRecognizers>
+
+                                <Label
+                                    FontFamily="MauiKitIcons"
+                                    FontSize="{OnIdiom Phone='20',
+                                                       Tablet='25',
+                                                       Desktop='30'}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Opacity="1"
+                                    Text="{x:Static views:MauiKitIcons.Bell}"
+                                    TextColor="{DynamicResource BaseTextColor}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </Border>
+                        </Grid>
+
+                        <Frame
+                            Margin="10,15,10,5"
+                            Padding="0"
+                            IsClippedToBounds="True"
+                            CornerRadius="25"
+                            HeightRequest="{OnIdiom Phone=200,
+                                                    Tablet=400,
+                                                    Desktop=410}">
+                            <Grid Padding="0" RowSpacing="{OnIdiom Phone=0, Tablet=5, Desktop=10}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="80" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--  Background color  -->
+                                <Rectangle
+                                    Grid.RowSpan="4"
+                                    Fill="{DynamicResource PrimaryColor}"
+                                    HorizontalOptions="FillAndExpand"
+                                    InputTransparent="true"
+                                    Opacity="1"
+                                    VerticalOptions="FillAndExpand">
+                                    <!--<Rectangle.Background>
+                                                    <LinearGradientBrush>
+                                                        <GradientStop Offset="0.1" Color="{Binding BackgroundGradientStart}" />
+                                                        <GradientStop Offset="1.0" Color="{Binding BackgroundGradientEnd}" />
+                                                    </LinearGradientBrush>
+                                                </Rectangle.Background>-->
+                                </Rectangle>
+
+                                <!--  Background image  -->
+                                <Image
+                                    Grid.RowSpan="3"
+                                    Aspect="AspectFill"
+                                    Opacity="0.2"
+                                    Source="abs_bg.png" />
+
+                                <!--  Card Name  -->
+                                <Label
+                                    Margin="20,0"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    Text="ALEX WILSON"
+                                    TextColor="{DynamicResource OverImageTextColor}"
+                                    VerticalOptions="End" />
+
+                                <Label
+                                    Grid.Row="1"
+                                    Margin="20,10,20,0"
+                                    FontAttributes="Bold"
+                                    FontFamily="BoldFont"
+                                    FontSize="20"
+                                    Text="****  ****  ****  5318"
+                                    TextColor="{DynamicResource OverImageTextColor}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <StackLayout
+                                    Grid.Row="2"
+                                    Margin="20"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        FontFamily="BoldFont"
+                                        FontSize="14"
+                                        Text="{localization:Translate StringBalance}"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+                                    <Label
+                                        FontFamily="BoldFont"
+                                        FontSize="14"
+                                        Style="{StaticResource Title1}"
+                                        Text="$15,250.00"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+                                </StackLayout>
+
+                                <!--  Icon displaying card type  -->
+                                <Image
+                                    Grid.Row="2"
+                                    Margin="15"
+                                    HeightRequest="25"
+                                    HorizontalOptions="End"
+                                    Source="master_card.png"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Frame>
+                    </StackLayout>
+
+                    <VisualElement.Behaviors>
+                        <animations:AnimateProgressDouble
+                            Maximum="280"
+                            Minimum="0"
+                            Progress="{Binding ScrollY, Source={x:Reference ScrollBehavior}}"
+                            TargetProperty="VisualElement.TranslationY"
+                            From="0"
+                            To="140" />
+                        <animations:AnimateProgressDouble
+                            Maximum="280"
+                            Minimum="50"
+                            Progress="{Binding ScrollY, Source={x:Reference ScrollBehavior}}"
+                            TargetProperty="VisualElement.Opacity"
+                            From="1"
+                            To="0" />
+                    </VisualElement.Behaviors>
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Margin="-3,-10,-3,0"
+                    Padding="{OnIdiom Phone='15,15,15,10',
+                                      Tablet='15,10',
+                                      Desktop='30,10'}"
+                    BackgroundColor="{DynamicResource BasePageColor}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30,30,0,0" />
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout
+                        Padding="5,0"
+                        Spacing="20"
+                        VerticalOptions="StartAndExpand">
+
+                        <!--  Insights  -->
+                        <Border
+                            Padding="15"
+                            BackgroundColor="#00235B"
+                            StrokeShape="{RoundRectangle CornerRadius='15'}">
+                            <Grid ColumnDefinitions="2*, 1, 2*" ColumnSpacing="12">
+
+                                <Grid
+                                    ColumnDefinitions="Auto, *"
+                                    ColumnSpacing="12"
+                                    RowDefinitions="Auto, Auto">
+                                    <!--  Icon  -->
+                                    <Border
+                                        Grid.RowSpan="2"
+                                        Padding="5"
+                                        BackgroundColor="{DynamicResource PrimaryColor}"
+                                        HeightRequest="46"
+                                        HorizontalOptions="Start"
+                                        Stroke="Transparent"
+                                        StrokeShape="{RoundRectangle CornerRadius='25'}"
+                                        TranslationY="0"
+                                        VerticalOptions="Center"
+                                        WidthRequest="46">
+                                        <Label
+                                            FontFamily="MauiKitIcons"
+                                            FontSize="{OnIdiom Phone='30',
+                                                               Tablet='35',
+                                                               Desktop='30'}"
+                                            HorizontalOptions="CenterAndExpand"
+                                            HorizontalTextAlignment="Center"
+                                            Opacity="1"
+                                            Text="{x:Static views:MauiKitIcons.ChartPie}"
+                                            TextColor="{DynamicResource OverImageTextColor}"
+                                            VerticalOptions="CenterAndExpand" />
+                                    </Border>
+
+                                    <Label
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="Insight"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        FontSize="13"
+                                        Text="Balance Trend"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+                                </Grid>
+
+                                <Rectangle
+                                    Grid.Column="1"
+                                    Margin="0,10"
+                                    Fill="{DynamicResource OverImageTextColor}"
+                                    WidthRequest="1" />
+
+                                <Grid
+                                    Grid.Column="2"
+                                    ColumnDefinitions="*, Auto"
+                                    ColumnSpacing="12"
+                                    RowDefinitions="Auto, Auto">
+
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="$ 98,342.65"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="13"
+                                        Text="+4.3%"
+                                        TextColor="{DynamicResource OverImageTextColor}" />
+
+                                    <Label
+                                        Grid.Column="1"
+                                        FontFamily="MauiKitIcons"
+                                        FontSize="{OnIdiom Phone='20',
+                                                           Tablet='25',
+                                                           Desktop='30'}"
+                                        HorizontalOptions="End"
+                                        HorizontalTextAlignment="End"
+                                        Opacity="1"
+                                        Text="{x:Static views:MauiKitIcons.Close}"
+                                        TextColor="{DynamicResource OverImageTextColor}"
+                                        TranslationX="5"
+                                        TranslationY="-5"
+                                        VerticalOptions="Start" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!--  Actions  -->
+                        <Grid Margin="0,10" ColumnDefinitions="1*,1*,1*,1*">
+
+                            <!--  Transfer  -->
+                            <StackLayout
+                                Grid.Column="0"
+                                HorizontalOptions="Center"
+                                Spacing="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GotoTransferCommand}" />
+                                </StackLayout.GestureRecognizers>
+
+                                <Border
+                                    Padding="5"
+                                    BackgroundColor="#EAEEF6"
+                                    HeightRequest="60"
+                                    HorizontalOptions="Start"
+                                    Stroke="Transparent"
+                                    StrokeShape="{RoundRectangle CornerRadius='30'}"
+                                    TranslationY="0"
+                                    VerticalOptions="Center"
+                                    WidthRequest="60">
+                                    <Label
+                                        FontFamily="MauiKitIcons"
+                                        FontSize="{OnIdiom Phone='30',
+                                                           Tablet='35',
+                                                           Desktop='30'}"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        Opacity="1"
+                                        Text="{x:Static views:MauiKitIcons.Transition}"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </Border>
+                                <Label HorizontalOptions="Center" Text="Transfer" />
+                            </StackLayout>
+
+                            <!--  Request  -->
+                            <StackLayout
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                Spacing="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GotoRequestCommand}" />
+                                </StackLayout.GestureRecognizers>
+
+                                <Border
+                                    Padding="5"
+                                    BackgroundColor="#EAEEF6"
+                                    HeightRequest="60"
+                                    HorizontalOptions="Start"
+                                    Stroke="Transparent"
+                                    StrokeShape="{RoundRectangle CornerRadius='30'}"
+                                    TranslationY="0"
+                                    VerticalOptions="Center"
+                                    WidthRequest="60">
+                                    <Label
+                                        FontFamily="MauiKitIcons"
+                                        FontSize="{OnIdiom Phone='30',
+                                                           Tablet='35',
+                                                           Desktop='30'}"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        Opacity="1"
+                                        Text="{x:Static views:MauiKitIcons.Receipt}"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </Border>
+                                <Label HorizontalOptions="Center" Text="Request" />
+                            </StackLayout>
+
+                            <!--  Topup  -->
+                            <StackLayout
+                                Grid.Column="2"
+                                HorizontalOptions="Center"
+                                Spacing="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GotoTopupCommand}" />
+                                </StackLayout.GestureRecognizers>
+
+                                <Border
+                                    Padding="5"
+                                    BackgroundColor="#EAEEF6"
+                                    HeightRequest="60"
+                                    HorizontalOptions="Start"
+                                    Stroke="Transparent"
+                                    StrokeShape="{RoundRectangle CornerRadius='30'}"
+                                    TranslationY="0"
+                                    VerticalOptions="Center"
+                                    WidthRequest="60">
+                                    <Label
+                                        FontFamily="MauiKitIcons"
+                                        FontSize="{OnIdiom Phone='30',
+                                                           Tablet='35',
+                                                           Desktop='30'}"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        Opacity="1"
+                                        Text="{x:Static views:MauiKitIcons.WalletMembership}"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </Border>
+                                <Label HorizontalOptions="Center" Text="Topup" />
+                            </StackLayout>
+
+                            <!--  More  -->
+                            <StackLayout
+                                Grid.Column="3"
+                                HorizontalOptions="Center"
+                                Spacing="5">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AllServiceCommand}" />
+                                </StackLayout.GestureRecognizers>
+
+                                <Border
+                                    Padding="5"
+                                    BackgroundColor="#EAEEF6"
+                                    HeightRequest="60"
+                                    HorizontalOptions="Start"
+                                    Stroke="Transparent"
+                                    StrokeShape="{RoundRectangle CornerRadius='30'}"
+                                    TranslationY="0"
+                                    VerticalOptions="Center"
+                                    WidthRequest="60">
+                                    <Label
+                                        FontFamily="MauiKitIcons"
+                                        FontSize="{OnIdiom Phone='30',
+                                                           Tablet='35',
+                                                           Desktop='30'}"
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        Opacity="1"
+                                        Text="{x:Static views:MauiKitIcons.DotsHorizontalCircle}"
+                                        TextColor="{DynamicResource PrimaryColor}"
+                                        VerticalOptions="CenterAndExpand" />
+                                </Border>
+                                <Label HorizontalOptions="Center" Text="More" />
+                            </StackLayout>
+                        </Grid>
+
+                        <!--  Recent Transactions  -->
+                        <Grid>
+                            <Label
+                                FontAttributes="Bold"
+                                FontFamily="BoldFont"
+                                FontSize="16"
+                                Text="{localization:Translate StringRecentTransaction}"
+                                TextColor="{DynamicResource BaseTextColor}" />
+                            <Label
+                                FontSize="14"
+                                HorizontalOptions="End"
+                                Text="{localization:Translate StringViewAll}"
+                                TextColor="{DynamicResource PrimaryColor}" />
+                        </Grid>
+
+                        <CollectionView
+                            ItemsSource="{Binding RecentTransactions}"
+                            SelectionChangedCommand="{Binding TransactionDetailCommand}"
+                            SelectionChangedCommandParameter="{Binding .}"
+                            SelectionMode="Single"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="12" Orientation="Vertical" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <templates:TransactionItemTemplate />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </ScrollView>
+
+        <!--  QR Scanner Button  -->
+        <Border
+            Grid.RowSpan="2"
+            Margin="10"
+            Padding="8"
+            BackgroundColor="{DynamicResource PrimaryColor}"
+            HeightRequest="70"
+            HorizontalOptions="End"
+            Shadow="{StaticResource CommonShadow}"
+            Stroke="{DynamicResource BlurBlue}"
+            StrokeShape="{RoundRectangle CornerRadius=30}"
+            StrokeThickness="8"
+            VerticalOptions="End"
+            WidthRequest="70">
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="QrScan_Tapped" />
+            </Border.GestureRecognizers>
+            <Image Aspect="AspectFit" HeightRequest="25">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="QrScan_Tapped" />
+                </Image.GestureRecognizers>
+                <Image.Source>
+                    <FontImageSource
+                        FontFamily="MauiKitIcons"
+                        Glyph="{x:Static views:MauiKitIcons.QrcodeScan}"
+                        Size="25"
+                        Color="{DynamicResource White}" />
+                </Image.Source>
+            </Image>
+        </Border>
+
+    </Grid>
+</ContentPage>
